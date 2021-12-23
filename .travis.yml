@@ -10,3 +10,26 @@ before_install:
 # -- --coverage automatic exit when test suite is done
 script:
   - docker run test/front npm run test -- --coverage
+
+ # configuration to tell travis CI deploy out project to AWS
+deploy: 
+# service provider
+  provider: elasticbeanstalk
+# URL from AWS : Docker-env.qbtbvwcxmh.us-west-2.elasticbeanstalk.com
+# region exist in url 
+  region : "us-west-2"
+# app name any name 
+  app: "docker"
+  env: "Docker-env"
+# travis CI copy all file directory into S3 bucket
+# we put S3 bucket name that generate automatic when create new application in elastic beanstalk
+  bucket_name: "elasticbeanstalk-us-west-2-306476627547"
+# the same app name
+  bucket_path: "docker"
+# deploy any code in master branch Only 
+  on:
+    branch: master
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key: 
+    secure: "$AWS_SECRET_KEY"
+
