@@ -1,0 +1,12 @@
+# super user permission because we use docker
+sudo: required
+# tell docker we need docker pre-installed
+services:
+  - docker
+# before any installed packages
+before_install:
+  - docker build -t test/front -f Dockerfile.dev . 
+# execute our test suite
+# -- --coverage automatic exit when test suite is done
+script:
+  - docker run test/front npm run test -- --coverage
